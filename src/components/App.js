@@ -1,8 +1,10 @@
 import './App.css';
 import React, {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Header from './Header';
 import ContactList from './ContactList';
 import AddContact from './AddContact';
+import ContactDetail from './ContactDetail';
 import { v4 as uuid } from 'uuid';
 
 function App() {
@@ -45,9 +47,14 @@ function App() {
 
   return (
     <div className="ui container">
-       <React.StrictMode><Header /></React.StrictMode>
-       <AddContact addContactHandler={addContactHandler} />
-       <ContactList contacts={contacts} getContactId={removeContactHandler}/>
+      <Router>
+       <Header />
+       <Routes>
+        <Route path="/add" element={<AddContact addContactHandler={addContactHandler} />} />
+        <Route path="/" element={<ContactList contacts={contacts} getContactId={removeContactHandler}/>} />
+        <Route path="/contact/:id" element={<ContactDetail />} />
+       </Routes>
+      </Router>
     </div>
   );
 }
